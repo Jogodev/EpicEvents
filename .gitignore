@@ -1,0 +1,15 @@
+# Environments
+.env
+env
+env/
+venv/
+
+# Unit test / coverage reports
+htmlcov/
+
+#IDE
+.vscode
+.idea
+
+__pycache__
+
