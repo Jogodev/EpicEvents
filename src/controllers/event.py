@@ -1,5 +1,6 @@
-from src.views.event import menu_event_view
+from src.views.event import EventView
 
-def menu_event_controller(payload):
-    
-    choice = menu_event_view()
+class EventController():
+    def menu_event_controller(payload):
+        
+        choice = EventView.menu_event_view()

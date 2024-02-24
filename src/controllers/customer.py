@@ -1,5 +1,6 @@
-from src.views.customer import menu_customer_view
+from src.views.customer import CustomerView
 
-def menu_customer_controller(payload):
-    
-    choice = menu_customer_view()
+class CustomerController():
+    def menu_customer_controller(payload):
+        
+        choice = CustomerView.menu_customer_view()
