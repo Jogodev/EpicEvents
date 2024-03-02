@@ -1,7 +1,7 @@
 """Main"""
 
 from src.controllers.main import main_menu_controller
-from src.controllers.collaborater import  CollaboraterController
+from src.controllers.collaborater import  CollaboraterController, CrudCollaboraterController
 from src.controllers.customer import CustomerController
 from src.controllers.contract import ContractController
 from src.controllers.event import EventController
@@ -10,7 +10,8 @@ controller_dict = {
     # Main
     "main_menu": main_menu_controller,
     # Collaborater
-    "menu_collaborater":CollaboraterController.menu_collaborater_controller,
+    "menu_collaborater": CollaboraterController.menu_collaborater_controller,
+    "create_collaborater": CrudCollaboraterController.create,
     # Customer
     "menu_customer": CustomerController.menu_customer_controller,
     # Contracts

@@ -1,6 +1,8 @@
 from rich import print
 from sqlalchemy import create_engine, URL
 from decouple import config
+from utils.utils import Base
+
 
 
 USERNAME=config("DB_USER")
@@ -15,16 +17,21 @@ db_url = URL.create(
     username=f"{USERNAME}",
     password=f"{PASSWORD}",
     host=f"{HOST}",
+    port=f"{PORT}",
     database=f"{DATABASE}",
 )
 
 engine = create_engine(db_url, echo=True)
 
+
 try:
     conn = engine.connect()
-    print('Base connecté')
+    print('[bold green]Base connecté[/bold green]')
+
+    Base.metadata.create_all(bind=conn)
+
 except Exception as error:
     print(error)
-    print('La connexion à la base à échoué')  
+    print('[bold red]La connexion à la base à échoué[/bold red]')  
 
 

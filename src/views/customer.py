@@ -1,3 +1,5 @@
+
+
 class CustomerView:
 
     def menu_customer_view():

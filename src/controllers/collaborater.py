@@ -1,6 +1,7 @@
-from src.views.collaborater import CollaboraterView
+from src.views.collaborater import CollaboraterView, CrudCollaboraterView
+import logging
 
-class CollaboraterController():
+class CollaboraterController:
 
     def menu_collaborater_controller(payload: dict):
         
@@ -14,3 +15,16 @@ class CollaboraterController():
             return "main_menu", payload
     
     
+class CrudCollaboraterController:
+
+    def create(payload):
+        collaborater = CrudCollaboraterView.create() 
+        logging.warning(collaborater)
+        if collaborater['role'] == '1':
+            collaborater['role'] = 'gestion'
+        elif collaborater['role'] == '2':
+            collaborater['role'] = 'commercial'
+        elif collaborater['role'] == '3':    
+            collaborater['role'] = 'support'
+
+        logging.warning(collaborater)
