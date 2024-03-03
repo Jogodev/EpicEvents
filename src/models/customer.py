@@ -7,11 +7,10 @@ class Customer(Base):
     __tablename__ = "customer"
 
     id = Column(Integer, primary_key=True, unique=True)
-    name = Column(String(50))
-    email = Column(String(100))
-    phone = Column(String(100))
+    name = Column(String(50), unique=True)
+    email = Column(String(100), unique=True)
+    phone = Column(String(100), unique=True)
     company = Column(String(100))
-    name = Column(String(50))
     created_at = Column(Date())
     updated_at = Column(Date())
     collaborater_name = Column(String, ForeignKey('collaborater.name'))

@@ -6,11 +6,11 @@ class Collaborater(Base):
     __tablename__ = 'collaborater'
     
     id = Column(Integer, primary_key=True, unique=True)
-    name = Column(String(100))
+    name = Column(String(100), unique=True)
     email = Column(String(100), unique=True)
     password = Column(String)
     role = Column(String(50))
-    customers = relationship('Customer', backref='collaboraters')
+    customers = relationship('Customer', backref='customers_collaboraters')
     contracts = relationship('Contract', backref='collaboraters')
     events = relationship('Event', backref='collaboraters')
     

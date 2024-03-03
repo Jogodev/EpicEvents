@@ -11,9 +11,9 @@ class Contract(Base):
     created_at = Column(Date())
     status = Column(Boolean(), default=False)
     events = relationship('Event', backref='contracts', uselist=False)
-    collaborater_name = Column(String, ForeignKey('collaborator.name'))
+    collaborater_name = Column(String, ForeignKey('collaborater.name'))
     collaborater = relationship('Collaborater')
-    customer_name = Column(Integer, ForeignKey('customer.name'))
+    customer_name = Column(String, ForeignKey('customer.name'))
     customer = relationship('Customer')
     
     

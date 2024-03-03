@@ -12,10 +12,9 @@ class Event(Base):
     location = Column(String(100))
     Attendees = Column(String(10))
     notes = Column(String())
-
     contract_id = Column(Integer, ForeignKey('contract.id'))
     contract = relationship('Contract')
-    customer_id = Column(String, ForeignKey('customer.id'))
+    customer_id = Column(Integer, ForeignKey('customer.id'))
     customer = relationship('Customer')
     support_contact = Column(String, ForeignKey('collaborater.name'))
     collaborater = relationship('Collaborater')
