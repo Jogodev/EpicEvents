@@ -3,10 +3,16 @@ from sqlalchemy.orm import relationship
 from utils.utils import Base
 
 class Collaborater(Base):
-    __tablename__ = 'collaborator'
+    __tablename__ = 'collaborater'
     
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100))
-    contract_id = Column(Integer, ForeignKey('contract.id'), nullable=True)
-    customers = relationship('Customer', backref='collaborator')
-    contracts =relationship('Contract', backref='collaborator')
+    id = Column(Integer, primary_key=True, unique=True)
+    name = Column(String(100), unique=True)
+    email = Column(String(100), unique=True)
+    password = Column(String)
+    role = Column(String(50))
+    customers = relationship('Customer', backref='customers_collaboraters')
+    contracts = relationship('Contract', backref='collaboraters')
+    events = relationship('Event', backref='collaboraters')
+    
+    def __repr__(self):
+        return f'Collaborateur : {self.name}'

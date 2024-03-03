@@ -1,5 +1,7 @@
-from src.views.contract import menu_contract_view
+from src.views.contract import ContractView
 
-def menu_contract_controller(payload):
+class ContractController():
     
-    choice = menu_contract_view()
+    def menu_contract_controller(payload):
+        
+        choice = ContractView.menu_contract_view()

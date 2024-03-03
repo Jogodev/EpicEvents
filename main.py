@@ -1,22 +1,23 @@
 """Main"""
 
 from src.controllers.main import main_menu_controller
-from src.controllers.collaborater import  menu_collaborater_controller
-from src.controllers.customer import menu_customer_controller
-from src.controllers.contract import menu_contract_controller
-from src.controllers.event import menu_event_controller
+from src.controllers.collaborater import  CollaboraterController, CrudCollaboraterController
+from src.controllers.customer import CustomerController
+from src.controllers.contract import ContractController
+from src.controllers.event import EventController
 
 controller_dict = {
     # Main
     "main_menu": main_menu_controller,
     # Collaborater
-    "menu_collaborater": menu_collaborater_controller,
+    "menu_collaborater": CollaboraterController.menu_collaborater_controller,
+    "create_collaborater": CrudCollaboraterController.create,
     # Customer
-    "menu_customer": menu_customer_controller,
+    "menu_customer": CustomerController.menu_customer_controller,
     # Contracts
-    "menu_contract": menu_contract_controller,
+    "menu_contract": ContractController.menu_contract_controller,
     # Events
-    "menu_event": menu_event_controller,
+    "menu_event": EventController.menu_event_controller,
 }
 
 def main():
