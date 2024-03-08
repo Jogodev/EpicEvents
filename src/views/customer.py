@@ -1,4 +1,6 @@
 from src.views.headers import Headers
+from rich.table import Table
+from rich.console import Console
 import logging
 
 
@@ -9,9 +11,9 @@ class CustomerView:
         Headers.menu_title("cusomer")
         txt = """
                         [1] - Ajouter un client
-                        [2] - Modifier un client
-                        [3] - Supprimer un client
-                        [4] - Liste de tous les clients
+                        [2] - Liste de tous les clients
+                        [3] - Modifier un client
+                        [4] - Supprimer un client
                         [b] - retour au menu principal
                         """
         print(txt)
@@ -55,3 +57,28 @@ class CrudCustomerView:
             "phone": phone,
             "company": company,
         }
+
+    def get(customers):
+        Headers.list_title("customer")
+        table = Table(title="Collaborateur(s)")
+        table.add_column("Id")
+        table.add_column("Nom")
+        table.add_column("Email")
+        table.add_column("Télephone")
+        table.add_column("Entreprise")
+        for customer in customers:
+            table.add_row(
+                str(customer.id),
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.company,
+            )
+
+        Console().print(table)
+        choice = input(
+            """
+        [b] retour
+        --> """
+        )
+        return choice

@@ -14,6 +14,8 @@ class CustomerController:
         choice = CustomerView.menu_customer_view()
         if choice == "1":
             return "create_customer", payload
+        elif choice == "2":
+            return "get_customer", payload
         else:
             print("\nSaisie non valide\n")
             return "menu_customer", payload
@@ -38,6 +40,17 @@ class CrudCustomercontroller:
         db.add(new_customer)
         db.commit()
         print(
-                f"[bold green]Nouveau client {new_customer.name}[/bold green]"
-            )
+            f"[bold green]Nouveau client {new_customer.name}[/bold green]")
         return "main_menu", payload
+
+    def get(payload):
+
+        clear_screen()
+
+        customers = db.query(Customer).all()
+        choice = CrudCustomerView.get(customers)
+        if choice == "b":
+            return "menu_customer", payload
+        else:
+            print("[bold red]Saisie non valide[/bold red]")
+            return "menu_customer", payload

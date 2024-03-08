@@ -4,7 +4,6 @@ from rich import print
 from config import db
 from src.utils.utils import clear_screen
 from src.models.collaborater import Collaborater
-import logging
 
 
 class CollaboraterController:
@@ -15,6 +14,8 @@ class CollaboraterController:
         choice = CollaboraterView.menu_collaborater_view()
         if choice == "1":
             return "create_collaborater", payload
+        if choice == "2":
+            return "get_collaborater", payload
         elif choice == "b":
             return "main_menu", payload
         else:
@@ -62,3 +63,19 @@ class CrudCollaboraterController:
                 f"[bold green]{new_collab.name} ajouté au collaborateur dans le groupe {new_collab.role}[/bold green]"
             )
         return "main_menu", payload
+    
+
+    def get(payload):
+        
+        clear_screen()
+        
+        collaborators = db.query(Collaborater).all()
+        choice = CrudCollaboraterView.get(collaborators)
+        if choice == 'b':
+            return "menu_collaborater", payload
+        else:
+            print(
+                    "[bold red]Saisie non valide[/bold red]"
+                )
+            return "menu_collaborater", payload
+

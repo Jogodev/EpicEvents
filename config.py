@@ -52,3 +52,5 @@ engine = create_engine(db_url, echo=True)
 
 Session = sessionmaker(engine)
 db = Session()
+
+cursor = db_url

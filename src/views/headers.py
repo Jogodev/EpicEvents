@@ -43,3 +43,13 @@ class Headers:
             print('[bold green]\n----------SUPPRIMER UN CONTRAT----------[/bold green]')
         elif title == "event":
             print('[bold green]\n----------SUPPRIMER UN EVENNEMENT----------[/bold green]')                       
+
+    def list_title(title):
+        if title == "collaborater":
+            print('[bold green]\n----------COLLABORATEURS----------[/bold green]')
+        elif title == "customer":
+            print('[bold green]\n----------CLIENTS----------[/bold green]')
+        elif title == "contract":
+            print('[bold green]\n----------CONTRATS----------[/bold green]')
+        elif title == "event":
+            print('[bold green]\n----------EVENNEMENTS----------[/bold green]')            

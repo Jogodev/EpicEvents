@@ -1,3 +1,7 @@
+from src.views.headers import Headers
+from rich.table import Table
+from rich.console import Console
+
 class ContractView:
 
     def menu_contract_view():
@@ -6,10 +10,10 @@ class ContractView:
         title = "\n-----------------------MENU CONTRATS---------------------------"
         txt = """
                         [1] - Ajouter un contrat
-                        [2] - Modifier un contrat
-                        [3] - Supprimer un contrat
-                        [4] - Liste de tous les contrats
-                        [b] - retour au menu principal
+                        [2] - Liste de tous les contrats
+                        [3] - Modifier un contrat
+                        [4] - Supprimer un contrat
+                        [b] - retour
                         """
         print(title)
         print(txt)

@@ -1,7 +1,7 @@
 """Check for inputs"""
 
 import re
-from src.utils.utils import regex_mail, regex_mdp
+from src.utils.utils import regex_mail, regex_mdp, regex_phone
 
 
 
