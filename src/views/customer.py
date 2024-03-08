@@ -1,10 +1,12 @@
+from src.views.headers import Headers
+import logging
 
 
 class CustomerView:
 
     def menu_customer_view():
         """Menu player"""
-        title = "\n-----------------------MENU CLIENT---------------------------"
+        Headers.menu_title("cusomer")
         txt = """
                         [1] - Ajouter un client
                         [2] - Modifier un client
@@ -12,8 +14,44 @@ class CustomerView:
                         [4] - Liste de tous les clients
                         [b] - retour au menu principal
                         """
-        print(title)
         print(txt)
 
-        choice = input("Faites votre choix : ")
+        choice = input("")
         return choice
+
+
+class CrudCustomerView:
+
+    def create():
+        Headers.create_title("customer")
+
+        email = input(
+            """
+        Email 
+        --> """
+        )
+
+        name = input(
+            """
+        Nom 
+        --> """
+        )
+
+        phone = input(
+            """
+        Numero de téléphone 
+        --> """
+        )
+
+        company = input(
+            """
+        Entreprise 
+        --> """
+        )
+
+        return {
+            "email": email,
+            "name": name,
+            "phone": phone,
+            "company": company,
+        }

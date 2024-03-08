@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from utils.utils import Base
+from src.utils.utils import Base
 
 
 class Event(Base):
@@ -16,7 +16,7 @@ class Event(Base):
     contract = relationship('Contract')
     customer_id = Column(Integer, ForeignKey('customer.id'))
     customer = relationship('Customer')
-    support_contact = Column(String, ForeignKey('collaborater.name'))
+    support_contact = Column(Integer, ForeignKey('collaborater.id'))
     collaborater = relationship('Collaborater')
     
     def __repr__(self):
