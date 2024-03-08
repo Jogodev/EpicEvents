@@ -5,7 +5,8 @@ class CollaboraterView:
 
     def menu_collaborater_view():
         """Menu collaborater"""
-        title = "\n-----------------------Menu client---------------------------"
+        Headers.menu_title('collaborater')
+
         txt = """
                         [1] - Ajouter un collaborateur
                         [2] - Modifier un collaborateur
@@ -13,7 +14,6 @@ class CollaboraterView:
                         [4] - Liste de tous les collaborateurs
                         [b] - retour au menu principal
                         """
-        print(title)
         print(txt)
 
         choice = input("Faites votre choix : ")
@@ -22,7 +22,13 @@ class CollaboraterView:
 class CrudCollaboraterView:
     
     def create():
-        Headers.create_title('customer')
+        Headers.create_title('collaborater')
+
+        email = input(
+        """
+        Email 
+        --> """
+    )
 
         name = input(
         """
@@ -40,4 +46,11 @@ class CrudCollaboraterView:
         --> """
     )
         
-        return  {'name' : name, 'role': role}  
+        password = input(
+        """
+        Au moins 6 caractères et un chiffre
+        Mot de passe
+        --> """
+    )
+        
+        return  {'email': email, 'name' : name, 'password': password, 'role': role}  

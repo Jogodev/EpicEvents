@@ -1,17 +1,16 @@
 from rich import print
 from sqlalchemy import create_engine, URL
 from decouple import config
-from utils.utils import Base, sessionmaker
+from src.utils.utils import Base, sessionmaker
 from src.models import collaborater, customer, contract, event
 
+USERNAME=config("DB_USER")
+PASSWORD=config("DB_PASSWORD")
+HOST=config("HOST")
+PORT=config("PORT")
+DATABASE=config("DATABASE")
 
 def db_init():
-    USERNAME=config("DB_USER")
-    PASSWORD=config("DB_PASSWORD")
-    HOST=config("HOST")
-    PORT=config("PORT")
-    DATABASE=config("DATABASE")
-
 
     db_url = URL.create(
         "postgresql+psycopg2",
@@ -37,4 +36,19 @@ def db_init():
 
     return engine, session
 
-db_init()
+# db_init()
+
+
+db_url = URL.create(
+    "postgresql+psycopg2",
+    username=f"{USERNAME}",
+    password=f"{PASSWORD}",
+    host=f"{HOST}",
+    port=f"{PORT}",
+    database=f"{DATABASE}",
+)
+
+engine = create_engine(db_url, echo=True)
+
+Session = sessionmaker(engine)
+db = Session()

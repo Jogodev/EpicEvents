@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
-from utils.utils import Base
+from src.utils.utils import Base
 
 class Contract(Base):
     __tablename__ = 'contract'
@@ -11,9 +11,9 @@ class Contract(Base):
     created_at = Column(Date())
     status = Column(Boolean(), default=False)
     events = relationship('Event', backref='contracts', uselist=False)
-    collaborater_name = Column(String, ForeignKey('collaborater.name'))
+    collaborater_id = Column(Integer, ForeignKey('collaborater.id'))
     collaborater = relationship('Collaborater')
-    customer_name = Column(String, ForeignKey('customer.name'))
+    customer_id = Column(Integer, ForeignKey('customer.id'))
     customer = relationship('Customer')
     
     
