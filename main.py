@@ -6,8 +6,8 @@ from src.controllers.collaborater import (
     CrudCollaboraterController,
 )
 from src.controllers.customer import CustomerController, CrudCustomercontroller
-from src.controllers.contract import ContractController
-from src.controllers.event import EventController
+from src.controllers.contract import ContractController, CrudContractController
+from src.controllers.event import EventController, CrudControllerEvent
 
 controller_dict = {
     # Main
@@ -15,15 +15,19 @@ controller_dict = {
     # Collaborater
     "menu_collaborater": CollaboraterController.menu_collaborater_controller,
     "create_collaborater": CrudCollaboraterController.create,
-    "get_collaborater": CrudCollaboraterController.get,
+    "get_collaborators": CrudCollaboraterController.list_all,
     # Customer
     "menu_customer": CustomerController.menu_customer_controller,
     "create_customer": CrudCustomercontroller.create,
-    "get_customer": CrudCustomercontroller.get,
+    "get_customers": CrudCustomercontroller.list_all,
     # Contracts
     "menu_contract": ContractController.menu_contract_controller,
+    "create_contract": CrudContractController.create,
+    "get_contracts": CrudContractController.list_all,
     # Events
     "menu_event": EventController.menu_event_controller,
+    "create_event": CrudControllerEvent.create,
+    "get_events": CrudControllerEvent.list_all,
 }
 
 

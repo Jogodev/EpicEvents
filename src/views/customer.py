@@ -18,7 +18,11 @@ class CustomerView:
                         """
         print(txt)
 
-        choice = input("")
+        choice = input(
+            """
+        [b] retour
+        --> """
+        )
         return choice
 
 
@@ -58,14 +62,14 @@ class CrudCustomerView:
             "company": company,
         }
 
-    def get(customers):
+    def list_all(customers):
         Headers.list_title("customer")
-        table = Table(title="Collaborateur(s)")
-        table.add_column("Id")
-        table.add_column("Nom")
-        table.add_column("Email")
-        table.add_column("Télephone")
-        table.add_column("Entreprise")
+        table = Table(title="Clients")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Email", justify="left", style="")
+        table.add_column("Télephone", justify="left", style="")
+        table.add_column("Entreprise", justify="left", style="")
         for customer in customers:
             table.add_row(
                 str(customer.id),

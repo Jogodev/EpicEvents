@@ -9,13 +9,13 @@ from src.models.collaborater import Collaborater
 class CollaboraterController:
 
     def menu_collaborater_controller(payload: dict):
-
-        clear_screen()
+        """Menu"""
+        
         choice = CollaboraterView.menu_collaborater_view()
         if choice == "1":
             return "create_collaborater", payload
         if choice == "2":
-            return "get_collaborater", payload
+            return "get_collaborators", payload
         elif choice == "b":
             return "main_menu", payload
         else:
@@ -24,7 +24,7 @@ class CollaboraterController:
 
 
 class CrudCollaboraterController:
-
+    """Crud collaborater"""
     def create(payload):
         
         clear_screen()
@@ -45,7 +45,7 @@ class CrudCollaboraterController:
             collaborater_dict["role"] = "commercial"
         elif collaborater_dict["role"] == "3":
             collaborater_dict["role"] = "support"
-        elif collaborater_dict["role"] != ['1', '2', '3']: 
+        elif collaborater_dict["role"] not in ['1', '2', '3']: 
             print(
                 "[bold red]Choisissez entre les 3 groupes[/bold red]"
             )
@@ -62,15 +62,15 @@ class CrudCollaboraterController:
         print(
                 f"[bold green]{new_collab.name} ajouté au collaborateur dans le groupe {new_collab.role}[/bold green]"
             )
-        return "main_menu", payload
+        return "menu_collaborater", payload
     
 
-    def get(payload):
+    def list_all(payload):
         
         clear_screen()
         
         collaborators = db.query(Collaborater).all()
-        choice = CrudCollaboraterView.get(collaborators)
+        choice = CrudCollaboraterView.list_all(collaborators)
         if choice == 'b':
             return "menu_collaborater", payload
         else:

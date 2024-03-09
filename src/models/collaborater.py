@@ -7,7 +7,7 @@ class Collaborater(Base):
     
     id = Column(Integer, primary_key=True, unique=True)
     name = Column(String(100))
-    email = Column(String(100), unique=True)
+    email = Column(String(100), unique=True) 
     password = Column(String)
     role = Column(String(50))
     customers = relationship('Customer', backref='customers_collaboraters')

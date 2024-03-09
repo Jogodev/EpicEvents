@@ -10,12 +10,13 @@ import datetime
 class CustomerController:
     def menu_customer_controller(payload):
 
-        clear_screen()
         choice = CustomerView.menu_customer_view()
         if choice == "1":
             return "create_customer", payload
         elif choice == "2":
-            return "get_customer", payload
+            return "get_customers", payload
+        elif choice == "b":
+            return "main_menu", payload
         else:
             print("\nSaisie non valide\n")
             return "menu_customer", payload
@@ -35,20 +36,19 @@ class CrudCustomercontroller:
             email=customer_dict["email"],
             phone=customer_dict["phone"],
             company=customer_dict["company"],
-            created_at=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            created_at=datetime.datetime.now().strftime("%d-%m-%Y"),
         )
         db.add(new_customer)
         db.commit()
-        print(
-            f"[bold green]Nouveau client {new_customer.name}[/bold green]")
-        return "main_menu", payload
+        print(f"[bold green]Nouveau client {new_customer.name}[/bold green]")
+        return "menu_customer", payload
 
-    def get(payload):
+    def list_all(payload):
 
         clear_screen()
 
         customers = db.query(Customer).all()
-        choice = CrudCustomerView.get(customers)
+        choice = CrudCustomerView.list_all(customers)
         if choice == "b":
             return "menu_customer", payload
         else:
