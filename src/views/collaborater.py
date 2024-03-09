@@ -58,7 +58,7 @@ class CrudCollaboraterView:
 
         return {"email": email, "name": name, "password": password, "role": role}
 
-    def get(collaborators):
+    def list_all(collaborators):
         Headers.list_title("collaborater")
         table = Table(title="Collaborateur(s)")
         table.add_column("Id")

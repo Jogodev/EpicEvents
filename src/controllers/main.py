@@ -1,10 +1,12 @@
-
+from src.utils.utils import clear_screen
 from src.views.main import main_menu_view
 
+
 def main_menu_controller(payload):
-    
+
+    clear_screen()
     choice = main_menu_view()
-    
+
     if choice == "1":
         return "menu_collaborater", payload
     elif choice == "2":
