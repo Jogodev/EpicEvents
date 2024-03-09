@@ -1,13 +1,16 @@
-from src.views.headers import Headers
+"""Customer views"""
+
 from rich.table import Table
 from rich.console import Console
-import logging
+from src.views.headers import Headers
 
 
 class CustomerView:
+    """Menu customer"""
 
-    def menu_customer_view():
-        """Menu player"""
+    @classmethod
+    def menu_customer_view(cls):
+        """Menu customer"""
         Headers.menu_title("cusomer")
         txt = """
                         [1] - Ajouter un client
@@ -27,8 +30,11 @@ class CustomerView:
 
 
 class CrudCustomerView:
+    """Crud customer view"""
 
+    @staticmethod
     def create():
+        """Post"""
         Headers.create_title("customer")
 
         email = input(
@@ -62,7 +68,9 @@ class CrudCustomerView:
             "company": company,
         }
 
+    @staticmethod
     def list_all(customers):
+        """All customers"""
         Headers.list_title("customer")
         table = Table(title="Clients")
         table.add_column("Id", justify="left", style="bold")
@@ -86,3 +94,38 @@ class CrudCustomerView:
         --> """
         )
         return choice
+
+    @staticmethod
+    def delete(customers):
+        """Delete"""
+        Headers.delete_title("customer")
+        table = Table(title="Clients")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Email", justify="left", style="")
+        table.add_column("Télephone", justify="left", style="")
+        table.add_column("Entreprise", justify="left", style="")
+        for customer in customers:
+            table.add_row(
+                str(customer.id),
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.company,
+            )
+
+        Console().print(table)
+        customer_id = input(
+            """
+        Id du client à supprimer
+        --> """
+        )
+
+        choice = input(
+            """
+        Cette action est irréversible êtes vous sûr ?
+
+        [y] oui [n] annuler
+            --> """
+        )
+        return {"choice": choice, "customer_id": customer_id}

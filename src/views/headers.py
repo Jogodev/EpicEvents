@@ -1,7 +1,11 @@
 from rich import print
 
 class Headers:
+    @staticmethod
+    def main_title():
+        print('[bold green]\n----------MENU PRINCIPAL----------[/bold green]')
 
+    @staticmethod
     def menu_title(title):
         if title == "collaborater":
             print('[bold green]\n----------COLLABORATEURS----------[/bold green]')
@@ -12,8 +16,8 @@ class Headers:
         elif title == "event":
             print('[bold green]\n----------EVENNEMENTS----------[/bold green]')      
 
-
-    def create_title(title) -> None:
+    @staticmethod
+    def create_title(title):
         if title == "collaborater":
             print('[bold green]\n----------AJOUTER UN COLLABORATEUR----------[/bold green]')
         elif title == "customer":
@@ -23,7 +27,7 @@ class Headers:
         elif title == "event":
             print('[bold green]\n----------AJOUTER UN EVENNEMENT----------[/bold green]')            
 
-
+    @staticmethod
     def update_title(title) -> None:
         if title == "collaborater":
             print('[bold green]\n----------MODIFIER UN COLLABORATEUR----------[/bold green]')
@@ -33,7 +37,7 @@ class Headers:
             print('[bold green]\n----------MODIFIER UN CONTRAT----------[/bold green]')
         elif title == "event":
             print('[bold green]\n----------MODIFIER UN EVENNEMENT----------[/bold green]')               
-
+    @staticmethod
     def delete_title(title) -> None:
         if title == "collaborater":
             print('[bold green]\n----------SUPPRIMER UN COLLABORATEUR----------[/bold green]')

@@ -3,6 +3,7 @@ max-line-length = 99
 exclude=
     env/,
     database/,
+    __pycache__,
     .gitignore,
     README.md,
     requirements.txt,

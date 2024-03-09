@@ -1,15 +1,19 @@
+"""Contract controllers"""
+
+import datetime
 from src.views.contract import ContractView, CrudContractView
 from src.models.contract import Contract
 from src.utils.utils import clear_screen
 from src.helpers.check import check_email
-from rich import print
 from config import db
-import datetime
+from rich import print
 
 
 class ContractController:
+    """Menu controller"""
 
-    def menu_contract_controller(payload):
+    @classmethod
+    def menu_contract_controller(cls, payload: dict):
         """Menu"""
 
         choice = ContractView.menu_contract_view()
@@ -18,6 +22,8 @@ class ContractController:
             return "create_contract", payload
         if choice == "2":
             return "get_contracts", payload
+        if choice == "4":
+            return "delete_contract", payload
         elif choice == "b":
             return "main_menu", payload
         else:
@@ -28,8 +34,9 @@ class ContractController:
 class CrudContractController:
     """Crud contract"""
 
-    def create(payload):
-
+    @classmethod
+    def create(cls, payload: dict):
+        """Post"""
         clear_screen()
         contract = CrudContractView.create()
         if contract["status"] == "n":
@@ -55,8 +62,9 @@ class CrudContractController:
         print(f"[bold green]Nouveau contrat n° {new_contract.id}[/bold green]")
         return "menu_contract", payload
 
-    def list_all(payload):
-
+    @classmethod
+    def list_all(cls, payload: dict):
+        """All contracts"""
         clear_screen()
 
         contracts = db.query(Contract).all()
@@ -66,3 +74,24 @@ class CrudContractController:
         else:
             print("[bold red]Saisie non valide[/bold red]")
             return "menu_contract", payload
+
+    @classmethod
+    def delete(cls, payload: dict):
+        """Delete"""
+        contracts = db.query(Contract).all()
+        contract_dict = CrudContractView.delete(contracts)
+
+        if contract_dict["choice"] == "y":
+            contract = db.query(Contract).get(contract_dict["contract_id"])
+            if contract is None:
+                print("[bold red]Ce contrat n'existe pas[/bold red]")
+                return "menu_contract", payload
+            print(contract)
+            db.delete(contract)
+            db.commit()
+            print(f"[bold green]{contract.name} supprimé[/bold green]")
+            return "menu_contract", payload
+        if contract_dict["choice"] == "n":
+            return "menu_contract", payload
+        print("[bold red]Saisie non valide[/bold red]")
+        return "menu_contract", payload

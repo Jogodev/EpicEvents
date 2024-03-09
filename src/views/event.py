@@ -1,9 +1,14 @@
-from src.views.headers import Headers
+"""Event views"""
+
 from rich.table import Table
 from rich.console import Console
+from src.views.headers import Headers
 
 
 class EventView:
+    """Event view menu"""
+
+    @staticmethod
     def menu_event_view():
         """Menu evenT"""
         Headers.menu_title("event")
@@ -23,7 +28,9 @@ class EventView:
 class CrudEventView:
     """Crud event"""
 
+    @staticmethod
     def create():
+        """Post"""
 
         name = input(
             """
@@ -55,7 +62,7 @@ class CrudEventView:
         --> """
         )
 
-        support_email = input(
+        support_contact = input(
             """
         Email equipe support
         --> """
@@ -85,13 +92,15 @@ class CrudEventView:
             "start_date": start_date,
             "end_date": end_date,
             "customer_email": customer_email,
-            "support_email": support_email,
+            "support_contact": support_contact,
             "attendees": attendees,
             "location": location,
             "description": description,
         }
 
+    @staticmethod
     def list_all(events):
+        """All events"""
         Headers.list_title("event")
         table = Table(title="Evènements")
         table.add_column("Id", justify="left", style="bold")
@@ -103,19 +112,17 @@ class CrudEventView:
         table.add_column("Pax", justify="left", style="")
         table.add_column("Début", justify="left", style="")
         table.add_column("Fin", justify="left", style="")
-        table.add_column("Début", justify="left", style="")
         for event in events:
             table.add_row(
                 str(event.id),
                 event.name,
-                event.contract_id,
+                str(event.contract_id),
                 event.customer_email,
-                event.support_email,
+                event.support_contact,
                 event.location,
-                event.attendees,
-                event.start_date,
-                event.end_date,
-                event.start_date,
+                event.Attendees,
+                str(event.start_date),
+                str(event.end_date),
             )
 
         Console().print(table)
@@ -125,3 +132,47 @@ class CrudEventView:
             --> """
         )
         return choice
+
+    @staticmethod
+    def delete(events):
+        """Delete owned event"""
+        Headers.delete_title("event")
+        table = Table(title="Evènements")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Contrat n°", justify="left", style="")
+        table.add_column("Client", justify="left", style="")
+        table.add_column("Support", justify="left", style="")
+        table.add_column("Lieu", justify="left", style="")
+        table.add_column("Pax", justify="left", style="")
+        table.add_column("Début", justify="left", style="")
+        table.add_column("Fin", justify="left", style="")
+        for event in events:
+            table.add_row(
+                str(event.id),
+                event.name,
+                str(event.contract_id),
+                event.customer_email,
+                event.support_contact,
+                event.location,
+                event.attendees,
+                str(event.start_date),
+                str(event.end_date),
+            )
+
+        Console().print(table)
+
+        event_id = input(
+            """
+        Id de l'évènement à supprimer
+        --> """
+        )
+
+        choice = input(
+            """
+        Cette action est irréversible êtes vous sûr ?
+
+        [y] oui [n] annuler
+            --> """
+        )
+        return {"choice": choice, "event_id": event_id}
