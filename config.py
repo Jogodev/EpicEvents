@@ -34,7 +34,6 @@ def db_init():
         print(error)
         print('[bold red]La connexion à la base à échoué[/bold red]')  
 
-
 # db_init()
 
 

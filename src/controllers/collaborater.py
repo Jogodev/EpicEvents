@@ -1,54 +1,57 @@
-from src.views.collaborater import CollaboraterView, CrudCollaboraterView
-from src.helpers.check import check_email, check_password
+"""Collaborater controllers"""
+
 from rich import print
-from config import db
-from src.utils.utils import clear_screen
+from src.views.collaborater import CollaboraterView, CrudCollaboraterView
 from src.models.collaborater import Collaborater
+from src.helpers.check import check_email, check_password
+from src.utils.utils import clear_screen
+from config import db
+
 
 
 class CollaboraterController:
+    """Menu"""
 
-    def menu_collaborater_controller(payload: dict):
+    @classmethod
+    def menu_collaborater_controller(cls, payload: dict):
         """Menu"""
-        
+
         choice = CollaboraterView.menu_collaborater_view()
         if choice == "1":
             return "create_collaborater", payload
         if choice == "2":
             return "get_collaborators", payload
-        elif choice == "b":
+        if choice == "4":
+            return "delete_collaborater", payload
+        if choice == "b":
             return "main_menu", payload
-        else:
-            print("\nSaisie non valide\n")
-            return "menu_collaborater", payload
+
+        print("\nSaisie non valide\n")
+        return "menu_collaborater", payload
 
 
 class CrudCollaboraterController:
     """Crud collaborater"""
-    def create(payload):
-        
+
+    @classmethod
+    def create(cls, payload: dict):
+        """Post"""
         clear_screen()
         collaborater_dict = CrudCollaboraterView.create()
         if not check_email(collaborater_dict["email"]):
-            print(
-                "[bold red]Email invalide[/bold red]"
-            )
+            print("[bold red]Email invalide[/bold red]")
             return "create_collaborater", payload
-        elif not check_password(collaborater_dict["password"]):
-            print(
-                "[bold red]Mot de passe invalide[/bold red]"
-            )
+        if not check_password(collaborater_dict["password"]):
+            print("[bold red]Mot de passe invalide[/bold red]")
             return "create_collaborater", payload
-        elif collaborater_dict["role"] == "1":
+        if collaborater_dict["role"] == "1":
             collaborater_dict["role"] = "gestion"
         elif collaborater_dict["role"] == "2":
             collaborater_dict["role"] = "commercial"
         elif collaborater_dict["role"] == "3":
             collaborater_dict["role"] = "support"
-        elif collaborater_dict["role"] not in ['1', '2', '3']: 
-            print(
-                "[bold red]Choisissez entre les 3 groupes[/bold red]"
-            )
+        elif collaborater_dict["role"] not in ["1", "2", "3"]:
+            print("[bold red]Choisissez entre les 3 groupes[/bold red]")
             return "create_collaborater", payload
         new_collab = Collaborater(
             email=collaborater_dict["email"],
@@ -60,22 +63,48 @@ class CrudCollaboraterController:
         db.add(new_collab)
         db.commit()
         print(
-                f"[bold green]{new_collab.name} ajouté au collaborateur dans le groupe {new_collab.role}[/bold green]"
-            )
+        f"[bold green]{new_collab.name} ajouté au collaborateur dans le groupe {new_collab.role}[/bold green]")
         return "menu_collaborater", payload
-    
 
-    def list_all(payload):
-        
+    @classmethod
+    def list_all(cls, payload):
+        """all collaborators"""
         clear_screen()
-        
+
         collaborators = db.query(Collaborater).all()
         choice = CrudCollaboraterView.list_all(collaborators)
-        if choice == 'b':
+        if choice == "b":
             return "menu_collaborater", payload
         else:
-            print(
-                    "[bold red]Saisie non valide[/bold red]"
-                )
+            print("[bold red]Saisie non valide[/bold red]")
             return "menu_collaborater", payload
 
+    @classmethod
+    def update(cls, payload: dict):
+        """Update"""
+        collaborators = db.query(Collaborater).all()
+        collaborater_dict = CrudCollaboraterView.update(collaborators)
+        
+
+    @classmethod
+    def delete(cls, payload: dict):
+        """Delete"""
+        collaborators = db.query(Collaborater).all()
+        collaborater_dict = CrudCollaboraterView.delete(collaborators)
+
+        if collaborater_dict["choice"] == "y":
+            collaborater = db.query(Collaborater).get(
+                collaborater_dict["collaborater_id"]
+            )
+            if collaborater is None:
+                print("[bold red]Ce contrat n'existe pas[/bold red]")
+                return "menu_collaborater", payload
+            print(collaborater)
+            db.delete(collaborater)
+            db.commit()
+            print(f"[bold green]{collaborater.name} supprimé[/bold green]")
+            return "menu_collaborater", payload
+        if collaborater_dict["choice"] == "n":
+            return "menu_collaborater", payload
+        print("[bold red]Saisie non valide[/bold red]")
+        return "menu_collaborater", payload

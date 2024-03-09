@@ -1,14 +1,18 @@
+"""Main menu view"""
+
+from src.views.headers import Headers
+
+
 def main_menu_view():
     """Main menu"""
 
-    title = "----------MENU----------"
+    Headers.main_title()
     txt = """
          [1] - Collaborateur
          [2] - Clients
          [3] - Contrats
          [4] - Evennements
         """
-    print(title)
     print(txt)
     choice = input("Faites votre choix : ")
     return choice

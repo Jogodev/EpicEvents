@@ -11,14 +11,14 @@ class Event(Base):
     start_date = Column(Date())
     end_date = Column(Date())
     location = Column(String(100))
-    Attendees = Column(String(10))
+    attendees = Column(String(10))
     notes = Column(String())
-    contract_id = Column(Integer, ForeignKey('contract.id'))
-    contract = relationship('Contract')
-    customer_email = Column(String, ForeignKey('customer.email'))
-    customer = relationship('Customer')
-    support_contact = Column(String, ForeignKey('collaborater.email'))
-    collaborater = relationship('Collaborater')
-    
+    contract_id = Column(Integer, ForeignKey("contract.id"))
+    contract = relationship("Contract")
+    customer_email = Column(String, ForeignKey("customer.email"))
+    customer = relationship("Customer")
+    support_contact = Column(String, ForeignKey("collaborater.email"))
+    collaborater = relationship("Collaborater")
+
     def __repr__(self):
-        return f'Evènement : {self.name}'
+        return f"Evènement : {self.name}"

@@ -16,24 +16,29 @@ controller_dict = {
     "menu_collaborater": CollaboraterController.menu_collaborater_controller,
     "create_collaborater": CrudCollaboraterController.create,
     "get_collaborators": CrudCollaboraterController.list_all,
+    "update_collaborater": CrudCollaboraterController.update,
+    "delete_collaborater": CrudCollaboraterController.delete,
     # Customer
     "menu_customer": CustomerController.menu_customer_controller,
     "create_customer": CrudCustomercontroller.create,
     "get_customers": CrudCustomercontroller.list_all,
+    "delete_customer": CrudCustomercontroller.delete,
     # Contracts
     "menu_contract": ContractController.menu_contract_controller,
     "create_contract": CrudContractController.create,
     "get_contracts": CrudContractController.list_all,
+    "delete_contract": CrudContractController.delete,
     # Events
     "menu_event": EventController.menu_event_controller,
     "create_event": CrudControllerEvent.create,
     "get_events": CrudControllerEvent.list_all,
+    "delete_event": CrudControllerEvent.delete,
 }
 
 
 def main():
     """Program start"""
-    payload = dict()
+    payload = {}
     string_controller, payload = main_menu_controller(payload)
 
     while True:

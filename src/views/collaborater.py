@@ -1,11 +1,15 @@
-from src.views.headers import Headers
+"""Collaborater views"""
+
 from rich.table import Table
 from rich.console import Console
+from src.views.headers import Headers
 
 
 class CollaboraterView:
+    """Menu"""
 
-    def menu_collaborater_view():
+    @classmethod
+    def menu_collaborater_view(cls):
         """Menu collaborater"""
         Headers.menu_title("collaborater")
 
@@ -23,8 +27,11 @@ class CollaboraterView:
 
 
 class CrudCollaboraterView:
+    """Collaborators views"""
 
+    @staticmethod
     def create():
+        """Post"""
         Headers.create_title("collaborater")
 
         email = input(
@@ -56,75 +63,96 @@ class CrudCollaboraterView:
         --> """
         )
 
-        return {"email": email, "name": name, "password": password, "role": role}
+        return {"email": email, "name": name.capitalize(), "password": password, "role": role}
 
+    @staticmethod
     def list_all(collaborators):
+        """All collaborators"""
         Headers.list_title("collaborater")
         table = Table(title="Collaborateur(s)")
         table.add_column("Id")
         table.add_column("Nom")
         table.add_column("email")
         table.add_column("Groupe")
-        for collaborater in collaborators:            
-            table.add_row(str(collaborater.id),collaborater.name, collaborater.email, collaborater.role)
-
+        for collaborater in collaborators:
+            table.add_row(
+                str(collaborater.id),
+                collaborater.name,
+                collaborater.email,
+                collaborater.role,
+            )
 
         Console().print(table)
+
         choice = input(
             """
         [b] retour
         --> """
         )
         return choice
-    
-    def update(collaborators):
+
+    @staticmethod
+    def update(collaborators) -> dict:
+        """Update"""
         Headers.list_title("collaborater")
         table = Table(title="Collaborateur(s)")
         table.add_column("Id")
-        table.add_column("Nom")
+        table.add_column("Nom(name)")
         table.add_column("Email")
         table.add_column("Groupe")
-        for collaborater in collaborators:            
-            table.add_row(str(collaborater.id),collaborater.name, collaborater.email, collaborater.role)
-
+        for collaborater in collaborators:
+            table.add_row(
+                str(collaborater.id),
+                collaborater.name,
+                collaborater.email,
+                collaborater.role,
+            )
 
         Console().print(table)
 
-        choice = input(
+        collaborater_id = input(
             """
-        [1] Modifier un collaborateur
+        Id du collaborateur à modifier
         --> """
         )
 
-        choice = input(
+        field = input(
             """
-        [b] retour
+        Champ à modifier
         --> """
         )
         return choice
-    
+
+    @staticmethod
     def delete(collaborators):
-        Headers.list_title("collaborater")
+        """Delete one collaboratoer"""
+        Headers.delete_title("collaborater")
         table = Table(title="Collaborateurs")
         table.add_column("Id")
         table.add_column("Nom")
         table.add_column("email")
         table.add_column("Groupe")
-        for collaborater in collaborators:            
-            table.add_row(str(collaborater.id),collaborater.name, collaborater.email, collaborater.role)
-
+        for collaborater in collaborators:
+            table.add_row(
+                str(collaborater.id),
+                collaborater.name,
+                collaborater.email,
+                collaborater.role,
+            )
 
         Console().print(table)
 
-        choice = input(
+        collaborater_id = input(
             """
-        [1] Supprimer un un collaborateur
+        Id du collaborateur à supprimer
         --> """
         )
 
         choice = input(
             """
-        [b] retour
-        --> """
+        Cette action est irréversible êtes vous sûr ?
+
+        [y] oui [n] annuler
+            --> """
         )
-        return choice
+        return {"choice": choice, "collaborater_id": collaborater_id}
