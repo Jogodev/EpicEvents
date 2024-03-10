@@ -20,16 +20,18 @@ class CustomerController:
             return "create_customer", payload
         if choice == "2":
             return "get_customers", payload
+        if choice == "3":
+            return "update_customer", payload
         if choice == "4":
             return "delete_customer", payload
         if choice == "b":
             return "main_menu", payload
-        
+
         print("\nSaisie non valide\n")
         return "menu_customer", payload
 
 
-class CrudCustomercontroller:
+class CrudCustomerController:
     """Crud customer controller"""
 
     @classmethod
@@ -61,6 +63,23 @@ class CrudCustomercontroller:
         if choice == "b":
             return "menu_customer", payload
         print("[bold red]Saisie non valide[/bold red]")
+        return "menu_customer", payload
+
+    @classmethod
+    def update(cls, payload: dict):
+        """Update"""
+        customers = db.query(Customer).all()
+        customer_dict = CrudCustomerView.update(customers)
+        customer = db.query(Customer).get(customer_dict["customer_id"])
+        if customer is None:
+            print("[bold red]Aucun client ne correspond à cet id[/bold red]")
+            return "menu_customer", payload
+
+        setattr(customer, customer_dict["key"], customer_dict["value"])
+        db.commit()
+        new_customer = db.query(Customer).get(customer_dict["customer_id"])
+        print(f"[bold green]Client modifié avec succès {new_customer}[/bold green]")
+
         return "menu_customer", payload
 
     @classmethod

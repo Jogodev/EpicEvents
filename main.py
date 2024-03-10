@@ -5,9 +5,9 @@ from src.controllers.collaborater import (
     CollaboraterController,
     CrudCollaboraterController,
 )
-from src.controllers.customer import CustomerController, CrudCustomercontroller
+from src.controllers.customer import CustomerController, CrudCustomerController
 from src.controllers.contract import ContractController, CrudContractController
-from src.controllers.event import EventController, CrudControllerEvent
+from src.controllers.event import EventController, CrudEventController
 
 controller_dict = {
     # Main
@@ -20,19 +20,22 @@ controller_dict = {
     "delete_collaborater": CrudCollaboraterController.delete,
     # Customer
     "menu_customer": CustomerController.menu_customer_controller,
-    "create_customer": CrudCustomercontroller.create,
-    "get_customers": CrudCustomercontroller.list_all,
-    "delete_customer": CrudCustomercontroller.delete,
+    "create_customer": CrudCustomerController.create,
+    "get_customers": CrudCustomerController.list_all,
+    "update_customer": CrudCustomerController.update,
+    "delete_customer": CrudCustomerController.delete,
     # Contracts
     "menu_contract": ContractController.menu_contract_controller,
     "create_contract": CrudContractController.create,
     "get_contracts": CrudContractController.list_all,
+    "update_contract": CrudContractController.update,
     "delete_contract": CrudContractController.delete,
     # Events
     "menu_event": EventController.menu_event_controller,
-    "create_event": CrudControllerEvent.create,
-    "get_events": CrudControllerEvent.list_all,
-    "delete_event": CrudControllerEvent.delete,
+    "create_event": CrudEventController.create,
+    "get_events": CrudEventController.list_all,
+    "update_event": CrudEventController.update,
+    "delete_event": CrudEventController.delete,
 }
 
 

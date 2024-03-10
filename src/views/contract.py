@@ -93,6 +93,51 @@ class CrudContractView:
         --> """
         )
         return choice
+    
+    @staticmethod
+    def update(contracts):
+        """Update contract"""
+        Headers.update_title("contract")
+        table = Table(title="Contrats")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Client", justify="left", style="bold")
+        table.add_column("Montant", justify="left", style="bold")
+        table.add_column("Reste à payer", justify="left", style="bold")
+        table.add_column("Statut", justify="left", style="bold")
+        for contract in contracts:
+            if contract.status is False:
+                contract.status = "En attente de signature"
+            else:
+                contract.status = "Signé"
+            table.add_row(
+                str(contract.id),
+                contract.customer_email,
+                contract.contract_price,
+                contract.left_to_pay,
+                contract.status,
+            )
+
+        Console().print(table)
+
+        contract_id = input(
+            """
+        Id du contrat à modifier
+        --> """
+        )
+
+        key = input(
+            """
+        Champ à modifier
+        --> """
+        )
+
+        value = input(
+            """
+        Nouvelle valeur
+        --> """
+        )
+
+        return {"contract_id": contract_id, "key": key.lower(), "value": value}
 
     @staticmethod
     def delete(contracts):

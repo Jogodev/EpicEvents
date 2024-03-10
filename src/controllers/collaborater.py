@@ -8,7 +8,6 @@ from src.utils.utils import clear_screen
 from config import db
 
 
-
 class CollaboraterController:
     """Menu"""
 
@@ -21,6 +20,8 @@ class CollaboraterController:
             return "create_collaborater", payload
         if choice == "2":
             return "get_collaborators", payload
+        if choice == "3":
+            return "update_collaborater", payload
         if choice == "4":
             return "delete_collaborater", payload
         if choice == "b":
@@ -63,7 +64,8 @@ class CrudCollaboraterController:
         db.add(new_collab)
         db.commit()
         print(
-        f"[bold green]{new_collab.name} ajouté au collaborateur dans le groupe {new_collab.role}[/bold green]")
+            f"[bold green]{new_collab.name} ajouté dans le groupe {new_collab.role}[/bold green]"
+        )
         return "menu_collaborater", payload
 
     @classmethod
@@ -84,7 +86,22 @@ class CrudCollaboraterController:
         """Update"""
         collaborators = db.query(Collaborater).all()
         collaborater_dict = CrudCollaboraterView.update(collaborators)
-        
+        collaborater = db.query(Collaborater).get(collaborater_dict["collaborater_id"])
+        if collaborater is None:
+            print("[bold red]Aucun collaborateur ne correspond à cet id[/bold red]")
+            return "menu_collaborater", payload
+
+
+        setattr(collaborater, collaborater_dict["key"], collaborater_dict["value"])
+        db.commit()
+        new_collaborater = db.query(Collaborater).get(
+            collaborater_dict["collaborater_id"]
+        )
+        print(
+            f"[bold green]Collaborateur modifié avec succès {new_collaborater}[/bold green]"
+        )
+
+        return "menu_collaborater", payload
 
     @classmethod
     def delete(cls, payload: dict):

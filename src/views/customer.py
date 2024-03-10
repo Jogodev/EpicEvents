@@ -96,6 +96,47 @@ class CrudCustomerView:
         return choice
 
     @staticmethod
+    def update(customers):
+        """All customers"""
+        Headers.update_title("customer")
+        table = Table(title="Clients")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Email", justify="left", style="")
+        table.add_column("Télephone", justify="left", style="")
+        table.add_column("Entreprise", justify="left", style="")
+        for customer in customers:
+            table.add_row(
+                str(customer.id),
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.company,
+            )
+
+        Console().print(table)
+
+        customer_id = input(
+            """
+        Id du customer à modifier
+        --> """
+        )
+
+        key = input(
+            """
+        Champ à modifier
+        --> """
+        )
+
+        value = input(
+            """
+        Nouvelle valeur
+        --> """
+        )
+
+        return {"customer_id": customer_id, "key": key.lower(), "value": value}
+
+    @staticmethod
     def delete(customers):
         """Delete"""
         Headers.delete_title("customer")
