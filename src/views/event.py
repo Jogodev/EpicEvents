@@ -10,13 +10,13 @@ class EventView:
 
     @staticmethod
     def menu_event_view():
-        """Menu evenT"""
+        """Menu event"""
         Headers.menu_title("event")
         txt = """
                 [1] - Ajouter un evennement
-                [2] - Liste de tous les evennements
-                [3] - Modifier un evennement
-                [4] - Supprimer un evennement
+                [2] - Liste de tous les évènements
+                [3] - Modifier un évènnement
+                [4] - Supprimer un évènnement
                 [b] - retour
                 """
         print(txt)
@@ -132,6 +132,55 @@ class CrudEventView:
             --> """
         )
         return choice
+
+    @staticmethod
+    def update(events):
+        """All events"""
+        Headers.update_title("event")
+        table = Table(title="Evènements")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Contrat n°", justify="left", style="")
+        table.add_column("Client", justify="left", style="")
+        table.add_column("Support", justify="left", style="")
+        table.add_column("Lieu", justify="left", style="")
+        table.add_column("Pax", justify="left", style="")
+        table.add_column("Début", justify="left", style="")
+        table.add_column("Fin", justify="left", style="")
+        for event in events:
+            table.add_row(
+                str(event.id),
+                event.name,
+                str(event.contract_id),
+                event.customer_email,
+                event.support_contact,
+                event.location,
+                event.Attendees,
+                str(event.start_date),
+                str(event.end_date),
+            )
+
+        Console().print(table)
+
+        event_id = input(
+            """
+        Id de l'évènement à modifier
+        --> """
+        )
+
+        key = input(
+            """
+        Champ à modifier
+        --> """
+        )
+
+        value = input(
+            """
+        Nouvelle valeur
+        --> """
+        )
+
+        return {"event_id": event_id, "key": key.lower(), "value": value}
 
     @staticmethod
     def delete(events):

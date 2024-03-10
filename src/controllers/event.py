@@ -21,6 +21,8 @@ class EventController:
             return "create_event", payload
         if choice == "2":
             return "get_events", payload
+        if choice == "3":
+            return "update_event", payload
         if choice == "4":
             return "delete_event", payload
         if choice == "b":
@@ -30,7 +32,7 @@ class EventController:
             return "menu_event", payload
 
 
-class CrudControllerEvent:
+class CrudEventController:
     """Crud controller"""
 
     @classmethod
@@ -73,6 +75,23 @@ class CrudControllerEvent:
         return "menu_event", payload
 
     @classmethod
+    def update(cls, payload: dict):
+        """Update"""
+        events = db.query(Event).all()
+        event_dict = CrudEventView.update(events)
+        event = db.query(Event).get(event_dict["event_id"])
+        if event is None:
+            print("[bold red]Aucun évènement ne correspond à cet id[/bold red]")
+            return "menu_event", payload
+
+        setattr(event, event_dict["key"], event_dict["value"])
+        db.commit()
+        new_event = db.query(Event).get(event_dict["event_id"])
+        print(f"[bold green]Evènement modifié avec succès {new_event}[/bold green]")
+
+        return "menu_event", payload
+
+    @classmethod
     def delete(cls, payload: dict):
         """Delete"""
 
@@ -82,7 +101,7 @@ class CrudControllerEvent:
         if event_dict["choice"] == "y":
             event = db.query(Event).get(event_dict["event_id"])
             if event is None:
-                print("[bold red]Ce contrat n'existe pas[/bold red]")
+                print("[bold red]Cet évènement n'existe pas[/bold red]")
                 return "menu_event", payload
             print(event)
             db.delete(event)

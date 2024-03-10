@@ -11,7 +11,7 @@ def main_menu_view():
          [1] - Collaborateur
          [2] - Clients
          [3] - Contrats
-         [4] - Evennements
+         [4] - Evènements
         """
     print(txt)
     choice = input("Faites votre choix : ")

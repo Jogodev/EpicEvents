@@ -22,13 +22,15 @@ class ContractController:
             return "create_contract", payload
         if choice == "2":
             return "get_contracts", payload
+        if choice == "3":
+            return "update_contract", payload
         if choice == "4":
             return "delete_contract", payload
-        elif choice == "b":
+        if choice == "b":
             return "main_menu", payload
-        else:
-            print("\nSaisie non valide\n")
-            return "menu_contract", payload
+        
+        print("\nSaisie non valide\n")
+        return "menu_contract", payload
 
 
 class CrudContractController:
@@ -74,6 +76,23 @@ class CrudContractController:
         else:
             print("[bold red]Saisie non valide[/bold red]")
             return "menu_contract", payload
+
+    @classmethod
+    def update(cls, payload: dict):
+        """Update"""
+        contracts = db.query(Contract).all()
+        contract_dict = CrudContractView.update(contracts)
+        contract = db.query(Contract).get(contract_dict["contract_id"])
+        if contract is None:
+            print("[bold red]Aucun contract ne correspond à cet id[/bold red]")
+            return "menu_contract", payload
+
+        setattr(contract, contract_dict["key"], contract_dict["value"])
+        db.commit()
+        new_contract = db.query(Contract).get(contract_dict["contract_id"])
+        print(f"[bold green]Contrat modifié avec succès {new_contract}[/bold green]")
+
+        return "menu_contract", payload
 
     @classmethod
     def delete(cls, payload: dict):

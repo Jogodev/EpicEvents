@@ -63,7 +63,12 @@ class CrudCollaboraterView:
         --> """
         )
 
-        return {"email": email, "name": name.capitalize(), "password": password, "role": role}
+        return {
+            "email": email,
+            "name": name.capitalize(),
+            "password": password,
+            "role": role,
+        }
 
     @staticmethod
     def list_all(collaborators):
@@ -94,8 +99,8 @@ class CrudCollaboraterView:
     @staticmethod
     def update(collaborators) -> dict:
         """Update"""
-        Headers.list_title("collaborater")
-        table = Table(title="Collaborateur(s)")
+        Headers.update_title("collaborater")
+        table = Table(title="Collaborateurs")
         table.add_column("Id")
         table.add_column("Nom(name)")
         table.add_column("Email")
@@ -116,12 +121,19 @@ class CrudCollaboraterView:
         --> """
         )
 
-        field = input(
+        key = input(
             """
         Champ à modifier
         --> """
         )
-        return choice
+
+        value = input(
+            """
+        Nouvelle valeur
+        --> """
+        )
+
+        return {"collaborater_id": collaborater_id, "key": key.lower(), "value": value}
 
     @staticmethod
     def delete(collaborators):
