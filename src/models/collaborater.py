@@ -16,4 +16,4 @@ class Collaborater(Base):
     events = relationship("Event", backref="events_collaboraters")
 
     def __repr__(self):
-        return f"Collaborateur : {self.name}"
+        return f"Collaborateur : {self.name, self.password}"

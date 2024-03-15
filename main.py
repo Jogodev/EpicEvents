@@ -8,10 +8,13 @@ from src.controllers.collaborater import (
 from src.controllers.customer import CustomerController, CrudCustomerController
 from src.controllers.contract import ContractController, CrudContractController
 from src.controllers.event import EventController, CrudEventController
+from src.controllers.auth import auth_controller
 
 controller_dict = {
     # Main
     "main_menu": main_menu_controller,
+    # Authentication
+    "auth_controller": auth_controller,
     # Collaborater
     "menu_collaborater": CollaboraterController.menu_collaborater_controller,
     "create_collaborater": CrudCollaboraterController.create,
@@ -42,7 +45,7 @@ controller_dict = {
 def main():
     """Program start"""
     payload = {}
-    string_controller, payload = main_menu_controller(payload)
+    string_controller, payload = auth_controller(payload)
 
     while True:
         controller = controller_dict[string_controller]
