@@ -121,9 +121,15 @@ class CrudCollaboraterView:
         --> """
         )
 
-        key = input(
+        field_to_change = input(
             """
-        Champ à modifier
+        Quel champ voulez vous modifier ?
+
+        [1] Email
+        [2] Name
+        [3] Groupe
+        [4] Mot de passe (seulement si vous êtes le collaborateur en question)
+
         --> """
         )
 
@@ -133,7 +139,11 @@ class CrudCollaboraterView:
         --> """
         )
 
-        return {"collaborater_id": collaborater_id, "key": key.lower(), "value": value}
+        return {
+            "collaborater_id": collaborater_id,
+            "field_to_change": field_to_change.lower(),
+            "value": value,
+        }
 
     @staticmethod
     def delete(collaborators):

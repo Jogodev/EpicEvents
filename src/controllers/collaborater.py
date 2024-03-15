@@ -3,7 +3,12 @@
 from rich import print
 from src.views.collaborater import CollaboraterView, CrudCollaboraterView
 from src.models.collaborater import Collaborater
-from src.helpers.check import check_email, check_password, hash_password
+from src.helpers.check import (
+    check_email,
+    check_password,
+    hash_password,
+    can_update_collaborater,
+)
 from src.utils.utils import clear_screen
 from config import db
 
@@ -83,25 +88,27 @@ class CrudCollaboraterController:
             return "menu_collaborater", payload
 
     @classmethod
-    def update(cls, payload: dict):
+    def update(cls, current_collaborater: dict):
         """Update"""
         collaborators = db.query(Collaborater).all()
         collaborater_dict = CrudCollaboraterView.update(collaborators)
         collaborater = db.query(Collaborater).get(collaborater_dict["collaborater_id"])
-        if collaborater is None:
-            print("[bold red]Aucun collaborateur ne correspond à cet id[/bold red]")
-            return "menu_collaborater", payload
+        if (
+            can_update_collaborater(
+                collaborater, collaborater_dict, current_collaborater
+            )
+            is True
+        ):
+            setattr(
+                collaborater,
+                collaborater_dict["field_to_change"],
+                collaborater_dict["value"],
+            )
+            db.commit()
+            print("[bold green]Collaborateur modifié[/bold green]")
+            return "menu_collaborater", current_collaborater
 
-        setattr(collaborater, collaborater_dict["key"], collaborater_dict["value"])
-        db.commit()
-        new_collaborater = db.query(Collaborater).get(
-            collaborater_dict["collaborater_id"]
-        )
-        print(
-            f"[bold green]Collaborateur modifié avec succès {new_collaborater}[/bold green]"
-        )
-
-        return "menu_collaborater", payload
+        return "menu_collaborater", current_collaborater
 
     @classmethod
     def delete(cls, payload: dict):
