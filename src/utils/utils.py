@@ -1,9 +1,12 @@
+"""Utils"""
+
 from sqlalchemy.orm import declarative_base, sessionmaker
 import os, sys
 
 
 # DB
 Base = declarative_base()
+
 
 # Check
 
@@ -15,12 +18,3 @@ regex_phone = r"^(?=.*?[0-9]).{10}$"
 # clear
 def clear_screen():
     os.system("cls" if sys.platform == "win32" else "clear")
-
-
-# Update
-
-
-def update(kwargs):
-    if isinstance(kwargs, dict):
-        for key, value in kwargs.items():
-            setattr(key, value)

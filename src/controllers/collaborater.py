@@ -3,7 +3,7 @@
 from rich import print
 from src.views.collaborater import CollaboraterView, CrudCollaboraterView
 from src.models.collaborater import Collaborater
-from src.helpers.check import check_email, check_password
+from src.helpers.check import check_email, check_password, hash_password
 from src.utils.utils import clear_screen
 from config import db
 
@@ -37,7 +37,7 @@ class CrudCollaboraterController:
     @classmethod
     def create(cls, payload: dict):
         """Post"""
-        clear_screen()
+
         collaborater_dict = CrudCollaboraterView.create()
         if not check_email(collaborater_dict["email"]):
             print("[bold red]Email invalide[/bold red]")
@@ -54,9 +54,10 @@ class CrudCollaboraterController:
         elif collaborater_dict["role"] not in ["1", "2", "3"]:
             print("[bold red]Choisissez entre les 3 groupes[/bold red]")
             return "create_collaborater", payload
+
         new_collab = Collaborater(
             email=collaborater_dict["email"],
-            password=collaborater_dict["password"],
+            password=hash_password(collaborater_dict["password"]),
             role=collaborater_dict["role"],
             name=collaborater_dict["name"],
         )
@@ -90,7 +91,6 @@ class CrudCollaboraterController:
         if collaborater is None:
             print("[bold red]Aucun collaborateur ne correspond à cet id[/bold red]")
             return "menu_collaborater", payload
-
 
         setattr(collaborater, collaborater_dict["key"], collaborater_dict["value"])
         db.commit()

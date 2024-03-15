@@ -13,12 +13,10 @@ class Customer(Base):
     company = Column(String(100))
     created_at = Column(Date())
     updated_at = Column(Date())
-    collaborater_id = Column(Integer, ForeignKey('collaborater.id'))
-    collaborater = relationship('Collaborater')
-    contracts = relationship('Contract', backref='customers')
-    events = relationship('Event', backref='customers')
+    collaborater_id = Column(Integer, ForeignKey("collaborater.id"))
+    collaborater = relationship("Collaborater")
+    contracts = relationship("Contract", backref="customers")
+    events = relationship("Event", backref="customers")
 
-    
     def __repr__(self):
-        return f'Clients : {self.name}'
-    
+        return f"Clients : {self.name}"

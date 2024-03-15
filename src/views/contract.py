@@ -4,8 +4,10 @@ from rich.table import Table
 from rich.console import Console
 from src.views.headers import Headers
 
+
 class ContractView:
     """Menu view"""
+
     @staticmethod
     def menu_contract_view():
         """Menu contract"""
@@ -93,7 +95,7 @@ class CrudContractView:
         --> """
         )
         return choice
-    
+
     @staticmethod
     def update(contracts):
         """Update contract"""

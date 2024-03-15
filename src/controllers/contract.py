@@ -15,7 +15,7 @@ class ContractController:
     @classmethod
     def menu_contract_controller(cls, payload: dict):
         """Menu"""
-
+        print(f"[bold green] Bonjour {payload.name.upper()} [/bold green]")
         choice = ContractView.menu_contract_view()
 
         if choice == "1":
@@ -28,7 +28,7 @@ class ContractController:
             return "delete_contract", payload
         if choice == "b":
             return "main_menu", payload
-        
+
         print("\nSaisie non valide\n")
         return "menu_contract", payload
 
