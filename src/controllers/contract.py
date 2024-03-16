@@ -4,7 +4,7 @@ import datetime
 from src.views.contract import ContractView, CrudContractView
 from src.models.contract import Contract
 from src.utils.utils import clear_screen
-from src.helpers.check_collaborater import check_email
+from src.helpers.check_common import check_email
 from config import db
 from rich import print
 

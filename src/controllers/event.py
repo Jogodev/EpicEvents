@@ -3,7 +3,7 @@
 from src.views.event import EventView, CrudEventView
 from src.models.event import Event
 from src.utils.utils import clear_screen
-from src.helpers.check_collaborater import check_email
+from src.helpers.check_common import check_email
 import datetime
 from config import db
 from rich import print

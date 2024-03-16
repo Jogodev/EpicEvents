@@ -4,7 +4,7 @@ import datetime
 from src.views.customer import CustomerView, CrudCustomerView
 from src.models.customer import Customer
 from src.utils.utils import clear_screen
-from src.helpers.check_collaborater import check_email
+from src.helpers.check_common import check_email
 from rich import print
 from config import db
 

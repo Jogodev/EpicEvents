@@ -3,8 +3,8 @@
 from rich import print
 from src.views.collaborater import CollaboraterView, CrudCollaboraterView
 from src.models.collaborater import Collaborater
+from src.helpers.check_common import check_email
 from src.helpers.check_collaborater import (
-    check_email,
     check_password,
     hash_password,
     can_update_collaborater,
