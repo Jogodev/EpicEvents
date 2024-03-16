@@ -1,4 +1,4 @@
-"""Check for inputs"""
+"""Checks for inputs"""
 
 import re
 import bcrypt
@@ -28,7 +28,10 @@ def check_hash_password(password, hashed_password):
     return bool(bcrypt.checkpw(password.encode(), hashed_password))
 
 
-def can_update_collaborater(collaborater, collaborater_dict, current_collaborater):
+# Collaborators update
+def can_update_collaborater(
+    collaborater: dict, collaborater_dict: dict, current_collaborater: dict
+) -> bool:
     if collaborater is None:
         print("[bold red]Aucun collaborateur ne correspond à cet id[/bold red]")
         return "menu_collaborater", current_collaborater
@@ -53,3 +56,15 @@ def can_update_collaborater(collaborater, collaborater_dict, current_collaborate
         collaborater_dict["field_to_change"] == "4"
     ):
         return True
+
+
+def check_field_to_update(field_to_update):
+    if field_to_update == "1":
+        field_to_update = "email"
+    elif field_to_update == "2":
+        field_to_update = "name"
+    elif field_to_update == "3":
+        field_to_update = "role"
+    elif field_to_update == "4":
+        field_to_update = "password"
+    return field_to_update
