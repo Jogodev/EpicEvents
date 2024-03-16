@@ -16,12 +16,12 @@ def check_phone(phone):
 
 # Hash password
 def hash_password(password):
-    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    password_to_persist = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+    return password_to_persist.decode("utf-8")
 
 
 def check_hash_password(password, hashed_password):
-    hashed_password = hash_password(password)
-    return bool(bcrypt.checkpw(password.encode(), hashed_password))
+    return bool(bcrypt.checkpw(password.encode(), hashed_password.encode()))
 
 
 # Collaborators update

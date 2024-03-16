@@ -1,7 +1,3 @@
-def is_auth(status):
-    return bool(status == "ok")
-
-
 def is_sale(role):
     return bool(role == "sale")
 
