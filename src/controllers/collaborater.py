@@ -3,11 +3,12 @@
 from rich import print
 from src.views.collaborater import CollaboraterView, CrudCollaboraterView
 from src.models.collaborater import Collaborater
-from src.helpers.check import (
+from src.helpers.check_collaborater import (
     check_email,
     check_password,
     hash_password,
     can_update_collaborater,
+    check_field_to_update,
 )
 from src.utils.utils import clear_screen
 from config import db
@@ -83,9 +84,8 @@ class CrudCollaboraterController:
         choice = CrudCollaboraterView.list_all(collaborators)
         if choice == "b":
             return "menu_collaborater", payload
-        else:
-            print("[bold red]Saisie non valide[/bold red]")
-            return "menu_collaborater", payload
+        print("[bold red]Saisie non valide[/bold red]")
+        return "menu_collaborater", payload
 
     @classmethod
     def update(cls, current_collaborater: dict):
@@ -93,15 +93,12 @@ class CrudCollaboraterController:
         collaborators = db.query(Collaborater).all()
         collaborater_dict = CrudCollaboraterView.update(collaborators)
         collaborater = db.query(Collaborater).get(collaborater_dict["collaborater_id"])
-        if (
-            can_update_collaborater(
-                collaborater, collaborater_dict, current_collaborater
-            )
-            is True
+        if can_update_collaborater(
+            collaborater, collaborater_dict, current_collaborater
         ):
             setattr(
                 collaborater,
-                collaborater_dict["field_to_change"],
+                check_field_to_update(collaborater_dict["field_to_change"]),
                 collaborater_dict["value"],
             )
             db.commit()

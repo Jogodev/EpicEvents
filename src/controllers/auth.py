@@ -4,7 +4,7 @@ from rich import print
 from src.views.auth import auth_view
 from src.models.collaborater import Collaborater
 from src.utils.utils import clear_screen
-from src.helpers.check import check_hash_password
+from src.helpers.check_collaborater import check_hash_password
 from config import db
 
 
