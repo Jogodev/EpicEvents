@@ -20,6 +20,7 @@ def auth_controller(payload: dict):
         print("[bold red] Email ou mot de passe invalide 1[/bold red]")
         return "auth_controller", payload
     collaborater = db.query(Collaborater).get(collaborater_find.id)
+    print(credential["password"])
     print(collaborater.password)
     if check_hash_password(credential["password"], collaborater.password):
         payload = collaborater

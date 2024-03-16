@@ -79,12 +79,14 @@ class CrudCollaboraterView:
         table.add_column("Nom")
         table.add_column("email")
         table.add_column("Groupe")
+        table.add_column("mdb")
         for collaborater in collaborators:
             table.add_row(
                 str(collaborater.id),
                 collaborater.name,
                 collaborater.email,
                 collaborater.role,
+                collaborater.password,
             )
 
         Console().print(table)
@@ -105,12 +107,14 @@ class CrudCollaboraterView:
         table.add_column("Nom(name)")
         table.add_column("Email")
         table.add_column("Groupe")
+        table.add_column("mdp")
         for collaborater in collaborators:
             table.add_row(
                 str(collaborater.id),
                 collaborater.name,
                 collaborater.email,
                 collaborater.role,
+                collaborater.password,
             )
 
         Console().print(table)

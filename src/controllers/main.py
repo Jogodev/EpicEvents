@@ -8,7 +8,7 @@ from src.views.main import main_menu_view
 def main_menu_controller(payload):
     """Main menu"""
     clear_screen()
-    print(f"[bold green] Bonjour {payload.name.upper()} [/bold green]")
+    # print(f"[bold green] Bonjour {payload.name.upper()} [/bold green]")
     choice = main_menu_view()
 
     if choice == "1":
