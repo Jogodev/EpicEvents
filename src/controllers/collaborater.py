@@ -45,8 +45,10 @@ class CrudCollaboraterController:
     def create(cls, current_collaborater: dict):
         """Post"""
 
-        if is_management(current_collaborater.role) != 'management':
-            print("[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]")
+        if is_management(current_collaborater.role) != "management":
+            print(
+                "[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]"
+            )
             return "menu_collaborater", current_collaborater
         collaborater_dict = CrudCollaboraterView.create()
         if not check_email(collaborater_dict["email"]):
@@ -123,8 +125,10 @@ class CrudCollaboraterController:
     def delete(cls, current_collaborater: dict):
         """Delete"""
 
-        if is_management(current_collaborater.role) != 'management':
-            print("[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]")
+        if is_management(current_collaborater.role) != "management":
+            print(
+                "[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]"
+            )
             return "menu_collaborater", current_collaborater
         collaborators = db.query(Collaborater).all()
         collaborater_dict = CrudCollaboraterView.delete(collaborators)
