@@ -55,7 +55,9 @@ class CrudCollaboraterController:
             print("[bold red]Email invalide[/bold red]")
             return "create_collaborater", current_collaborater
         if not check_password(collaborater_dict["password"]):
-            print("[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]")
+            print(
+                "[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]"
+            )
             return "menu_collaborater", current_collaborater
         if collaborater_dict["role"] == "1":
             collaborater_dict["role"] = "management"
@@ -105,12 +107,23 @@ class CrudCollaboraterController:
         ):
             if collaborater_dict["field_to_change"] == "4":
                 if not check_password(collaborater_dict["value"]):
-                    print("[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]")
+                    print(
+                        "[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]"
+                    )
                     return "menu_collaborater", current_collaborater
                 setattr(
                     collaborater,
                     check_field_to_update(collaborater_dict["field_to_change"]),
                     hash_password(collaborater_dict["value"]),
+                )
+            if collaborater_dict["field_to_change"] == "1":
+                if not check_email(collaborater_dict["value"]):
+                    print("[bold red]Email invalide[/bold red]")
+                    return "menu_collaborater", current_collaborater
+                setattr(
+                    collaborater,
+                    check_field_to_update(collaborater_dict["field_to_change"]),
+                    (collaborater_dict["value"]),
                 )
             else:
                 setattr(

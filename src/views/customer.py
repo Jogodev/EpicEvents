@@ -122,9 +122,15 @@ class CrudCustomerView:
         --> """
         )
 
-        key = input(
+        field_to_update = input(
             """
-        Champ à modifier
+        Quel champ voulez vous modifier ?
+
+        [1] Nom
+        [2] Email
+        [3] Téléphone
+        [4] Entreprise
+
         --> """
         )
 
@@ -134,7 +140,11 @@ class CrudCustomerView:
         --> """
         )
 
-        return {"customer_id": customer_id, "key": key.lower(), "value": value}
+        return {
+            "customer_id": customer_id,
+            "field_to_update": field_to_update.lower(),
+            "value": value,
+        }
 
     @staticmethod
     def delete(customers):
