@@ -127,19 +127,29 @@ class CrudContractView:
         --> """
         )
 
-        key = input(
+        field_to_update = input(
             """
-        Champ à modifier
+        Quel champ voulez vous modifier ?
+
+        [1] Prix du contrat
+        [2] Reste à payer
+        [3] Statut (signé ou non)
+
         --> """
         )
 
         value = input(
             """
         Nouvelle valeur
+        (Pour le statut 1 = signé, 2 = non)
         --> """
         )
 
-        return {"contract_id": contract_id, "key": key.lower(), "value": value}
+        return {
+            "contract_id": contract_id,
+            "field_to_update": field_to_update.lower(),
+            "value": value,
+        }
 
     @staticmethod
     def delete(contracts):

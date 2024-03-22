@@ -4,6 +4,7 @@ import datetime
 from src.views.customer import CustomerView, CrudCustomerView
 from src.models.customer import Customer
 from src.utils.utils import clear_screen
+from src.helpers.check_customer import check_field_to_update, has_customer
 from src.helpers.check_common import check_email, check_phone
 from src.helpers.permissions import is_sale
 from rich import print
@@ -54,7 +55,7 @@ class CrudCustomerController:
             phone=customer_dict["phone"],
             company=customer_dict["company"],
             created_at=datetime.datetime.now().strftime("%d-%m-%Y"),
-            collaborater_id=current_collaborater.id
+            collaborater_id=current_collaborater.id,
         )
         db.add(new_customer)
         db.commit()
@@ -72,13 +73,14 @@ class CrudCustomerController:
         print("[bold red]Saisie non valide[/bold red]")
         return "menu_customer", current_collaborater
 
-
     @classmethod
     def update(cls, current_collaborater: dict):
         """Update"""
 
         if not is_sale(current_collaborater.role):
-            print("[bold red]Vous n'êtes pas autorisé à modifier des clients[/bold red]")
+            print(
+                "[bold red]Vous n'êtes pas autorisé à modifier des clients[/bold red]"
+            )
             return "menu_customer", current_collaborater
         customers = db.query(Customer).all()
         customer_dict = CrudCustomerView.update(customers)
@@ -86,12 +88,22 @@ class CrudCustomerController:
         if customer is None:
             print("[bold red]Aucun client ne correspond à cet id[/bold red]")
             return "menu_customer", current_collaborater
-        if customer_dict["key"] == "phone":
+        if customer_dict["field_to_update"] == "2":
+            if not check_email(customer_dict["value"]):
+                print("[bold red]Email invalide[/bold red]")
+                return "menu_customer", current_collaborater
+        if customer_dict["field_to_update"] == "3":
             if not check_phone(customer_dict["value"]):
-                print("[bold red]Telephone invalide[/bold red]")
-            return "menu_customer", current_collaborater
-        setattr(customer, customer_dict["key"], customer_dict["value"])
-        Customer(updated_at=datetime.datetime.now().strftime("%d-%m-%Y"))
+                print("[bold red]Téléphone invalide[/bold red]")
+                return "menu_customer", current_collaborater
+        setattr(
+            customer,
+            check_field_to_update(customer_dict["field_to_update"]),
+            (customer_dict["value"]),
+        )
+        db.query(Customer).filter(Customer.id == customer_dict["customer_id"]).update(
+            {Customer.updated_at: datetime.datetime.now().strftime("%d-%m-%Y")}
+        )
         db.commit()
         new_customer = db.query(Customer).get(customer_dict["customer_id"])
         print(f"[bold green]Client modifié avec succès {new_customer}[/bold green]")
@@ -102,7 +114,9 @@ class CrudCustomerController:
     def delete(cls, current_collaborater: dict):
         """Delete"""
         if not is_sale(current_collaborater.role):
-            print("[bold red]Vous n'êtes pas autorisé à supprimer des clients[/bold red]")
+            print(
+                "[bold red]Vous n'êtes pas autorisé à supprimer des clients[/bold red]"
+            )
             return "menu_customer", current_collaborater
         customers = db.query(Customer).all()
         customer_dict = CrudCustomerView.delete(customers)

@@ -19,4 +19,4 @@ class Customer(Base):
     events = relationship("Event", backref="customers")
 
     def __repr__(self):
-        return f"Clients : {self.name}"
+        return f"Client : {self.name}"
