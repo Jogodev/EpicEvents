@@ -45,7 +45,7 @@ class CrudCollaboraterController:
     def create(cls, current_collaborater: dict):
         """Post"""
 
-        if is_management(current_collaborater.role) != "management":
+        if not is_management(current_collaborater.role):
             print(
                 "[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]"
             )
@@ -55,8 +55,8 @@ class CrudCollaboraterController:
             print("[bold red]Email invalide[/bold red]")
             return "create_collaborater", current_collaborater
         if not check_password(collaborater_dict["password"]):
-            print("[bold red]Mot de passe invalide[/bold red]")
-            return "create_collaborater", current_collaborater
+            print("[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]")
+            return "menu_collaborater", current_collaborater
         if collaborater_dict["role"] == "1":
             collaborater_dict["role"] = "management"
         elif collaborater_dict["role"] == "2":
@@ -65,7 +65,7 @@ class CrudCollaboraterController:
             collaborater_dict["role"] = "support"
         elif collaborater_dict["role"] not in ["1", "2", "3"]:
             print("[bold red]Choisissez entre les 3 groupes[/bold red]")
-            return "create_collaborater", current_collaborater
+            return "menu_collaborater", current_collaborater
 
         new_collab = Collaborater(
             email=collaborater_dict["email"],
@@ -104,6 +104,9 @@ class CrudCollaboraterController:
             collaborater, collaborater_dict, current_collaborater
         ):
             if collaborater_dict["field_to_change"] == "4":
+                if not check_password(collaborater_dict["value"]):
+                    print("[bold red]Mot de passe invalide : Au moins 6 caractères et un chiffre[/bold red]")
+                    return "menu_collaborater", current_collaborater
                 setattr(
                     collaborater,
                     check_field_to_update(collaborater_dict["field_to_change"]),
@@ -125,9 +128,9 @@ class CrudCollaboraterController:
     def delete(cls, current_collaborater: dict):
         """Delete"""
 
-        if is_management(current_collaborater.role) != "management":
+        if not is_management(current_collaborater.role):
             print(
-                "[bold red]Vous n'êtes pas autorisé à ajouter des collaborateurs[/bold red]"
+                "[bold red]Vous n'êtes pas autorisé à supprimer des collaborateurs[/bold red]"
             )
             return "menu_collaborater", current_collaborater
         collaborators = db.query(Collaborater).all()
