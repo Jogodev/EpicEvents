@@ -11,7 +11,7 @@ class CustomerView:
     @classmethod
     def menu_customer_view(cls):
         """Menu customer"""
-        Headers.menu_title("cusomer")
+        Headers.menu_title("customer")
         txt = """
                         [1] - Ajouter un client
                         [2] - Liste de tous les clients
