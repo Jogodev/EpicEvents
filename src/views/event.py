@@ -13,11 +13,11 @@ class EventView:
         """Menu event"""
         Headers.menu_title("event")
         txt = """
-                [1] - Ajouter un evennement
-                [2] - Liste de tous les évènements
-                [3] - Modifier un évènnement
-                [4] - Supprimer un évènnement
-                [b] - retour
+        [1] - Ajouter un evennement
+        [2] - Liste de tous les évènements
+        [3] - Modifier un évènnement
+        [4] - Supprimer un évènnement
+        [b] - retour
                 """
         print(txt)
 

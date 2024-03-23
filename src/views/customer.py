@@ -13,12 +13,12 @@ class CustomerView:
         """Menu customer"""
         Headers.menu_title("customer")
         txt = """
-                        [1] - Ajouter un client
-                        [2] - Liste de tous les clients
-                        [3] - Modifier un client
-                        [4] - Supprimer un client
-                        [b] - retour au menu principal
-                        """
+        [1] - Ajouter un client
+        [2] - Liste de tous les clients
+        [3] - Modifier un client
+        [4] - Supprimer un client
+        [b] - retour au menu principal
+        """
         print(txt)
 
         choice = input(

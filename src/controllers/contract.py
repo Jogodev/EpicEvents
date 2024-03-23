@@ -3,10 +3,12 @@
 import datetime
 from src.views.contract import ContractView, CrudContractView
 from src.models.contract import Contract
+from src.models.customer import Customer
+from src.models.collaborater import Collaborater
 from src.helpers.check_contract import check_field_to_update, status_value
 from src.utils.utils import clear_screen
 from src.helpers.permissions import is_management
-from src.helpers.check_common import check_email
+from src.helpers.check_common import check_email, is_email_exist
 from config import db
 from rich import print
 
@@ -43,11 +45,13 @@ class CrudContractController:
         """Post"""
         clear_screen()
         if not is_management(current_collaborater.role):
-            print(
-                "[bold red]Vous n'êtes pas autorisé à créer des contrats[/bold red]"
-            )
+            print("[bold red]Vous n'êtes pas autorisé à créer des contrats[/bold red]")
             return "menu_contract", current_collaborater
-        contract = CrudContractView.create()
+        customers = db.query(Customer).all()
+        contract = CrudContractView.create(customers)
+        if not is_email_exist(contract["customer_email"], Customer):
+            print("[bold red]Ce client n'existe pas[/bold red]")
+            return "menu_contract", current_collaborater
         if contract["status"] == "n":
             contract["status"] = False
         elif contract["status"] == "y":
@@ -58,12 +62,16 @@ class CrudContractController:
         elif not check_email(contract["email"]):
             print("[bold red]Email invalide[/bold red]")
             return "create_contract", current_collaborater
-
+        customer = (
+            db.query(Customer).filter_by(email=contract["customer_email"]).first()
+        )
+        collaborater = db.query(Collaborater).get(customer.collaborater_id)
         new_contract = Contract(
             customer_email=contract["customer_email"],
             contract_price=contract["contract_price"],
             left_to_pay=contract["left_to_pay"],
             status=contract["status"],
+            collaborater_email=collaborater.email,
             created_at=datetime.datetime.now().strftime("%d-%m-%Y"),
         )
         db.add(new_contract)
@@ -80,9 +88,9 @@ class CrudContractController:
         choice = CrudContractView.list_all(contracts)
         if choice == "b":
             return "menu_contract", current_collaborater
-        else:
-            print("[bold red]Saisie non valide[/bold red]")
-            return "menu_contract", current_collaborater
+
+        print("[bold red]Saisie non valide[/bold red]")
+        return "menu_contract", current_collaborater
 
     @classmethod
     def update(cls, current_collaborater: dict):

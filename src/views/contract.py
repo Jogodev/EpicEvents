@@ -14,12 +14,12 @@ class ContractView:
 
         Headers.menu_title("contract")
         txt = """
-                        [1] - Ajouter un contrat
-                        [2] - Liste de tous les contrats
-                        [3] - Modifier un contrat
-                        [4] - Supprimer un contrat
-                        [b] - retour
-                        """
+        [1] - Ajouter un contrat
+        [2] - Liste de tous les contrats
+        [3] - Modifier un contrat
+        [4] - Supprimer un contrat
+        [b] - retour
+        """
         print(txt)
 
         choice = input("Faites votre choix : ")
@@ -30,10 +30,25 @@ class CrudContractView:
     """Crud contract"""
 
     @staticmethod
-    def create():
+    def create(customers):
         """Post"""
         Headers.create_title("contract")
+        table = Table(title="Clients")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Email", justify="left", style="")
+        table.add_column("Télephone", justify="left", style="")
+        table.add_column("Entreprise", justify="left", style="")
+        for customer in customers:
+            table.add_row(
+                str(customer.id),
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.company,
+            )
 
+        Console().print(table)
         customer_email = input(
             """
         Email du client
