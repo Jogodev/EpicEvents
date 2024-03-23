@@ -14,12 +14,12 @@ class CollaboraterView:
         Headers.menu_title("collaborater")
 
         txt = """
-                        [1] - Ajouter un collaborateur
-                        [2] - Liste de tous les collaborateurs
-                        [3] - Modifier un collaborateur
-                        [4] - Supprimer un collaborateur
-                        [b] - retour au menu principal
-                        """
+        [1] - Ajouter un collaborateur
+        [2] - Liste de tous les collaborateurs
+        [3] - Modifier un collaborateur
+        [4] - Supprimer un collaborateur
+        [b] - retour au menu principal
+        """
         print(txt)
 
         choice = input("Faites votre choix : ")
