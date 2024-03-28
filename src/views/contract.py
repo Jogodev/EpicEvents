@@ -90,17 +90,15 @@ class CrudContractView:
         table.add_column("Montant", justify="left", style="bold")
         table.add_column("Reste à payer", justify="left", style="bold")
         table.add_column("Statut", justify="left", style="bold")
+        table.add_column("Commercial", justify="left", style="bold")
         for contract in contracts:
-            if contract.status is False:
-                contract.status = "En attente de signature"
-            else:
-                contract.status = "Signé"
             table.add_row(
                 str(contract.id),
                 contract.customer_email,
                 contract.contract_price,
                 contract.left_to_pay,
-                contract.status,
+                str(contract.status),
+                contract.collaborater_email,
             )
 
         Console().print(table)
@@ -122,16 +120,13 @@ class CrudContractView:
         table.add_column("Reste à payer", justify="left", style="bold")
         table.add_column("Statut", justify="left", style="bold")
         for contract in contracts:
-            if contract.status is False:
-                contract.status = "En attente de signature"
-            else:
-                contract.status = "Signé"
             table.add_row(
                 str(contract.id),
                 contract.customer_email,
                 contract.contract_price,
                 contract.left_to_pay,
-                contract.status,
+                str(contract.status),
+                contract.collaborater_email,
             )
 
         Console().print(table)

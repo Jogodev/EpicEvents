@@ -7,7 +7,7 @@ from src.models.customer import Customer
 from src.models.collaborater import Collaborater
 from src.helpers.check_contract import check_field_to_update, status_value
 from src.utils.utils import clear_screen
-from src.helpers.permissions import is_management
+from src.helpers.permissions import is_management, is_sale
 from src.helpers.check_common import check_email, is_email_exist
 from config import db
 from rich import print
@@ -95,8 +95,19 @@ class CrudContractController:
     @classmethod
     def update(cls, current_collaborater: dict):
         """Update"""
-        contracts = db.query(Contract).all()
-        contract_dict = CrudContractView.update(contracts)
+        if not is_management(current_collaborater.role) and not is_sale(
+            current_collaborater.role
+        ):
+            print("[bold red]Vous n'êtes pas autorisé à créer des contrats[/bold red]")
+            return "menu_contract", current_collaborater
+        if is_management(current_collaborater.role):
+            contracts = db.query(Contract).all()
+            contract_dict = CrudContractView.update(contracts)
+        if is_sale(current_collaborater.role):
+            contracts = db.query(Contract).filter(
+                Contract.collaborater_email == current_collaborater.email
+            )
+            contract_dict = CrudContractView.update(contracts)
         contract = db.query(Contract).get(contract_dict["contract_id"])
         if contract is None:
             print("[bold red]Aucun contract ne correspond à cet id[/bold red]")
@@ -105,11 +116,16 @@ class CrudContractController:
             if contract_dict["value"] not in ["1", "2"]:
                 print("[bold red]Saisie non valide du statut(1, 2)[/bold red]")
                 return "menu_contract", current_collaborater
-
             setattr(
                 contract,
                 check_field_to_update(contract_dict["field_to_update"]),
                 status_value(contract_dict["value"]),
+            )
+        else:
+            setattr(
+                contract,
+                check_field_to_update(contract_dict["field_to_update"]),
+                contract_dict["value"],
             )
         db.commit()
         new_contract = db.query(Contract).get(contract_dict["contract_id"])

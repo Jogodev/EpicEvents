@@ -17,3 +17,7 @@ def check_phone(phone):
 
 def is_email_exist(email, entity):
     return bool(db.query(entity).filter_by(email=email).first())
+
+
+def check_date():
+    return bool()

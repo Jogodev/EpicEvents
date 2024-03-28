@@ -12,4 +12,4 @@ def check_field_to_update(field_to_update):
 
 
 def status_value(value):
-    return bool(value == 1)
+    return bool(value == "1")
