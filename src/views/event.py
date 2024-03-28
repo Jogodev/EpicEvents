@@ -29,9 +29,26 @@ class CrudEventView:
     """Crud event"""
 
     @staticmethod
-    def create():
+    def create(customers):
         """Post"""
+        table = Table(title="Clients")
+        table.add_column("Id", justify="left", style="bold")
+        table.add_column("Nom", justify="left", style="")
+        table.add_column("Email", justify="left", style="")
+        table.add_column("Télephone", justify="left", style="")
+        table.add_column("Entreprise", justify="left", style="")
+        table.add_column("Contrat", justify="left", style="")
+        for customer in customers:
+            table.add_row(
+                str(customer.id),
+                customer.name,
+                customer.email,
+                customer.phone,
+                customer.company,
+                str(customer.contracts),
+            )
 
+        Console().print(table)
         name = input(
             """
         Nom de l'évènement
@@ -62,12 +79,6 @@ class CrudEventView:
         --> """
         )
 
-        support_contact = input(
-            """
-        Email equipe support
-        --> """
-        )
-
         attendees = input(
             """
         Nombre de personnes
@@ -92,7 +103,6 @@ class CrudEventView:
             "start_date": start_date,
             "end_date": end_date,
             "customer_email": customer_email,
-            "support_contact": support_contact,
             "attendees": attendees,
             "location": location,
             "description": description,
@@ -120,7 +130,7 @@ class CrudEventView:
                 event.customer_email,
                 event.support_contact,
                 event.location,
-                event.Attendees,
+                event.attendees,
                 str(event.start_date),
                 str(event.end_date),
             )
